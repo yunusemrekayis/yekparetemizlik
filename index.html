@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="tr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yekpare Temizlik - Profesyonel Temizlik Hizmetleri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-text-animate {
+            animation: fadeInDown 1s ease-out forwards;
+        }
+        .hero-subtext-animate {
+            animation: fadeInUp 1s ease-out 0.5s forwards;
+            opacity: 0;
+        }
+        .hero-button-animate {
+             animation: fadeInUp 1s ease-out 1s forwards;
+             opacity: 0;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .service-card-hover .service-card-content {
+            transform: translateY(100%);
+            transition: transform 0.5s ease-in-out;
+        }
+        .service-card-hover:hover .service-card-content {
+            transform: translateY(0);
+        }
+        .service-card-hover .service-card-bg {
+            transition: transform 0.5s ease-in-out;
+        }
+        .service-card-hover:hover .service-card-bg {
+            transform: scale(1.1);
+        }
+
+        /* Modal Styles */
+        .modal-enter { animation: modal-enter-animation 0.3s ease-out; }
+        .modal-leave { animation: modal-leave-animation 0.3s ease-in; }
+        .modal-backdrop-enter { animation: backdrop-enter-animation 0.3s ease-out; }
+        .modal-backdrop-leave { animation: backdrop-leave-animation 0.3s ease-in; }
+
+        @keyframes modal-enter-animation {
+            from { opacity: 0; transform: translateY(-50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes modal-leave-animation {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to { opacity: 0; transform: translateY(-50px) scale(0.9); }
+        }
+        @keyframes backdrop-enter-animation {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes backdrop-leave-animation {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        /* Service Page Detail Styles */
+        .page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 100;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .page.active {
+            transform: translateX(0);
+        }
+        
+        .slider-container .slide-content {
+            animation-delay: 500ms;
+        }
+        
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* About slider image fit */
+        .about-slide { display: flex; align-items: center; justify-content: center; }
+        .about-slide img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+    </style>
+</head>
+<body class="bg-white text-gray-800">
+
+    <!-- Header -->
+    <header id="header" class="bg-white/80 backdrop-blur-md shadow-md fixed w-full z-40 transition-all duration-300">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#anasayfa" class="text-3xl font-bold text-blue-900">Yekpare<span class="text-orange-500">Temizlik</span></a>
+            <nav class="hidden lg:flex space-x-8 items-center">
+                <a href="#anasayfa" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium">Ana Sayfa</a>
+                <a href="#hizmetlerimiz" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium">Hizmetlerimiz</a>
+                <a href="#hakkimizda" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium">Hakkımızda</a>
+                <a href="#projelerimiz" class="text-gray-700 hover:text-orange-500 transition duration-300 font-medium">Projelerimiz</a>
+                <a href="#iletisim" class="bg-orange-500 text-white px-5 py-2 rounded-full hover:bg-orange-600 transition duration-300 shadow-lg">Teklif Al</a>
+            </nav>
+            <button id="mobile-menu-button" class="lg:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white">
+            <a href="#anasayfa" class="block text-gray-700 hover:text-orange-500 px-6 py-3">Ana Sayfa</a>
+            <a href="#hizmetlerimiz" class="block text-gray-700 hover:text-orange-500 px-6 py-3">Hizmetlerimiz</a>
+            <a href="#hakkimizda" class="block text-gray-700 hover:text-orange-500 px-6 py-3">Hakkımızda</a>
+            <a href="#projelerimiz" class="block text-gray-700 hover:text-orange-500 px-6 py-3">Projelerimiz</a>
+            <a href="#iletisim" class="block bg-orange-500 text-white text-center mx-6 my-3 px-5 py-2 rounded-full hover:bg-orange-600">Teklif Al</a>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section id="anasayfa" class="relative h-screen w-full overflow-hidden">
+            <div id="slider-container" class="relative w-full h-full">
+                <!-- Slides will be injected here by JS -->
+            </div>
+            <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex space-x-3" id="slider-dots">
+                <!-- Dots will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="hizmetlerimiz" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4">HİZMETLERİMİZ</h2>
+                <div class="w-24 h-1 bg-orange-500 mx-auto mt-2 mb-12"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Service cards will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+
+        <!-- About Us Section -->
+        <section id="hakkimizda" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-wrap items-center -mx-4">
+                    <div class="w-full lg:w-1/2 px-4 mb-8 lg:mb-0">
+                        <!-- About us slider (local images: images/team-1.jpg, images/team-2.jpg, images/team-3.jpg) -->
+                        <div id="about-slider" class="relative rounded-lg shadow-2xl w-full h-64 md:h-80 overflow-hidden">
+                            <!-- Slides will be injected here by JS -->
+                            <div id="about-slider-dots" class="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2 z-20"></div>
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 px-4">
+                        <h2 class="text-4xl font-bold text-primary-blue mb-4">NEDEN BİZİ TERCİH ETMELİSİNİZ?</h2>
+                        <div class="w-24 h-1 bg-accent-orange mt-2 mb-6"></div>
+                        <p class="text-gray-600 mb-6 text-lg">Yekpare Temizlik olarak, İstanbul'un her köşesine, beklentilerinizin ötesinde bir temizlik hizmeti sunmak için buradayız. Bizi farklı kılan, sadece temizlik yapmak değil, aynı zamanda size sağlıklı, ferah ve huzurlu yaşam alanları yaratmaktır.</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-orange-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div>
+                                    <h4 class="font-bold text-xl text-blue-900">Profesyonel ve Güvenilir Ekip</h4>
+                                    <p class="text-gray-600">Ekibimiz, alanında eğitimli, tecrübeli ve güvenilir profesyonellerden oluşur. Her bir personelimiz, işini titizlikle ve güler yüzle yapar.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-6 h-6 text-orange-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div>
+                                    <h4 class="font-bold text-xl text-blue-900">Çevre Dostu Ürünler</h4>
+                                    <p class="text-gray-600">Sağlığınıza ve çevreye duyarlıyız. Bu nedenle, kullandığımız tüm temizlik ürünleri insan sağlığına zararsız, doğa dostu ve yüksek kalitededir.</p>
+                                </div>
+                            </li>
+                             <li class="flex items-start">
+                                <svg class="w-6 h-6 text-orange-500 mr-3 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div>
+                                    <h4 class="font-bold text-xl text-blue-900">Müşteri Memnuniyeti Odaklı</h4>
+                                    <p class="text-gray-600">%100 müşteri memnuniyeti garantisiyle çalışıyoruz. Hizmetimizden memnun kalana dek işimizin arkasındayız.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Gallery Section -->
+        <section id="projelerimiz" class="py-20 bg-white">
+            <div class="container mx-auto px-6 text-center">
+                 <h2 class="text-4xl font-bold text-blue-900 mb-4">PROJELERİMİZ</h2>
+                <div class="w-24 h-1 bg-orange-500 mx-auto mt-2 mb-12"></div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+                    <!-- Project items will be injected by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="iletisim" class="py-20 bg-gray-100">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold text-blue-900 mb-4">İLETİŞİM</h2>
+                <div class="w-24 h-1 bg-orange-500 mx-auto mt-2 mb-12"></div>
+                <div class="max-w-4xl mx-auto bg-white p-8 rounded-lg shadow-lg text-left">
+                    <form id="contact-form">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <input type="text" id="contact-name" placeholder="Adınız Soyadınız" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" required>
+                            <input type="email" id="contact-email" placeholder="E-posta Adresiniz (Opsiyonel)" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                            <input type="tel" id="contact-phone" placeholder="Telefon Numaranız (Opsiyonel)" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                             <select id="contact-service" class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                <option value="" disabled selected>Hizmet Seçiniz</option>
+                                <option>İnşaat Sonrası Temizlik</option>
+                                <option>Ofis ve Plaza Temizliği</option>
+                                <option>Ev & Villa Temizliği</option>
+                                <option>Restoran & Cafe Temizliği</option>
+                                <option>Otel & Yurt Temizliği</option>
+                                <option>Okul & Dershane Temizliği</option>
+                                <option>Endüstriyel Mutfak Temizliği</option>
+                                <option>Koltuk Yıkama</option>
+                            </select>
+                        </div>
+                        <textarea id="contact-message" placeholder="Mesajınız" rows="5" class="w-full p-3 mt-6 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500" required></textarea>
+                        <button type="submit" class="w-full bg-orange-500 text-white mt-6 p-4 rounded-md font-bold text-lg hover:bg-orange-600 transition duration-300">Teklif İste (WhatsApp)</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Yekpare<span class="text-orange-500">Temizlik</span></h3>
+                    <p class="text-blue-200">İstanbul genelinde profesyonel, güvenilir ve kaliteli temizlik çözümleri sunuyoruz. Sağlıklı ve hijyenik yaşam alanları için buradayız.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 border-b-2 border-orange-500 pb-2 inline-block">Hızlı Menü</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#anasayfa" class="text-blue-200 hover:text-white">Ana Sayfa</a></li>
+                        <li><a href="#hizmetlerimiz" class="text-blue-200 hover:text-white">Hizmetlerimiz</a></li>
+                        <li><a href="#hakkimizda" class="text-blue-200 hover:text-white">Hakkımızda</a></li>
+                        <li><a href="#projelerimiz" class="text-blue-200 hover:text-white">Projelerimiz</a></li>
+                        <li><a href="#iletisim" class="text-blue-200 hover:text-white">İletişim</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 border-b-2 border-orange-500 pb-2 inline-block">Hizmetlerimiz</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-blue-200 hover:text-white">İnşaat Sonrası Temizlik</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Ofis Temizliği</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Ev & Villa Temizliği</a></li>
+                        <li><a href="#" class="text-blue-200 hover:text-white">Koltuk Yıkama</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-4 border-b-2 border-orange-500 pb-2 inline-block">Bize Ulaşın</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                            info@yekparetemizlik.com
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                            +90 553 153 50 49
+                        </li>
+                        <li class="flex items-start"> <!-- Changed items-center to items-start for better alignment with multiline address -->
+                            <svg class="w-5 h-5 mr-3 mt-1 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" /></svg>
+                            <span>Sultan Selim,<br>Sonbahar Sk NO: 5a,<br>34415 Kağıthane/İstanbul</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="bg-blue-950 py-4">
+            <div class="container mx-auto px-6 text-center text-blue-300 text-sm">
+                &copy; 2024 Yekpare Temizlik. Tüm Hakları Saklıdır.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+        <div id="modal-backdrop" class="fixed inset-0 bg-black/70"></div>
+        <div id="modal-content" class="bg-white rounded-lg shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative transform transition-all duration-300">
+            <!-- Content will be injected by JS -->
+        </div>
+    </div>
+    
+    <!-- Service Detail Page Container -->
+    <div id="page-container">
+        <!-- Service pages will be injected here -->
+    </div>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/905531535049" target="_blank" rel="noopener noreferrer" title="WhatsApp'tan Ulaşın" class="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-transform transform hover:scale-110">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.487 5.235 3.487 8.413.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.433-9.89-9.889-9.89-5.452 0-9.887 4.434-9.889 9.89.001 2.228.651 4.391 1.899 6.22l-1.222 4.479 4.62-1.211zm8.308-5.429c-.273-.136-1.615-.795-1.865-.885-.251-.09-.434-.135-.618.135-.184.27-.704.885-.863 1.065-.159.18-.318.203-.591.068-.273-.136-1.146-.42-2.183-1.346-.807-.719-1.348-1.614-1.507-1.884-.159-.27-.016-.418.12-.553.123-.122.272-.317.408-.475.136-.159.181-.27.271-.453.09-.184.045-.343-.023-.478-.068-.136-.618-1.49-.847-2.035-.229-.544-.459-.469-.618-.478-.159-.01-.343-.01-.526-.01s-.478.068-.729.338c-.251.27-.959.93-1.163 1.956-.204 1.025.23 1.89.271 2.035.045.159.959 1.49 2.32 2.055 1.36 0.565 2.43 0.45 3.23.27 0.8-.18 1.46-.729 1.66-1.455.204-.728.204-1.35.148-1.455-.056-.105-.2-.158-.46-.282z"/>
+        </svg>
+    </a>
+
+    <script>
+        // Theme Colors
+        const theme = {
+            colors: {
+                'primary-blue': '#1e3a8a',
+                'accent-orange': '#f97316'
+            }
+        };
+
+        // All Data
+        const servicesData = {
+            construction: {
+                cardTitle: 'İnşaat Sonrası Temizlik',
+                shortDesc: 'İnşaat ve tadilat sonrası oluşan kaba ve ince kirliliği profesyonelce temizliyoruz.',
+                cardImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1470&auto=format&fit=crop',
+                alt: 'İnşaat Sonrası Temizlik',
+                title: 'İnşaat Sonrası Detaylı Temizlik',
+                heroImage: 'https://images.unsplash.com/photo-1574974619199-a82d0ebc3a03?q=80&w=1920&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=600&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">İnşaat veya tadilat sonrası geride kalan moloz, harç, boya, alçı kalıntıları ve yoğun toz, özel ekipman ve uzmanlık gerektiren zorlu bir temizlik sürecini beraberinde getirir. Yekpare Temizlik olarak, bu zorlu süreci sizin için kolaylaştırıyor, yeni yaşam veya çalışma alanınızı pırıl pırıl ve kullanıma hazır hale getiriyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Ekibimiz, inşaat sonrası temizlik konusunda özel eğitim almış profesyonellerden oluşur. Kaba temizlikten ince detaylara kadar her aşamayı titizlikle planlar ve uygularız. Zeminler, duvarlar, camlar, pencereler, kapılar ve dolaplar gibi tüm yüzeylerdeki inatçı kirleri, yüzeye zarar vermeden, doğru tekniklerle temizleriz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Bu hizmetimizde, standart temizlik ürünlerinin yetersiz kaldığı durumlar için özel olarak formüle edilmiş, güçlü endüstriyel temizleyiciler kullanıyoruz. Harç ve çimento sökücüler, boya ve etiket kalıntılarını çıkaran özel solventler, derz aralarını temizleyen asidik olmayan formüller ve yüzeyleri dezenfekte eden güçlü ama güvenli kimyasallar ile çalışıyoruz. Tüm ürünlerimiz, yüzeylerinize zarar vermeden maksimum hijyen sağlamak üzere seçilmiştir.</p>`
+            },
+            office: {
+                cardTitle: 'Ofis ve Plaza Temizliği',
+                shortDesc: 'Çalışma alanlarınızın hijyenik ve motive edici bir ortama dönüşmesini sağlıyoruz.',
+                cardImage: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1484&auto=format&fit=crop',
+                alt: 'Ofis Temizliği',
+                title: 'Profesyonel Ofis ve Plaza Temizliği',
+                heroImage: 'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1920&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?q=80&w=600&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">Temiz ve düzenli bir ofis, çalışanların motivasyonunu artırır, verimliliği yükseltir ve şirket imajınızı güçlendirir. Yekpare Temizlik olarak, ofis ve plazalarınız için günlük, haftalık veya aylık periyodik temizlik hizmetleri sunarak, her zaman hijyenik ve prestijli bir çalışma ortamı sağlıyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Disiplinli ve güvenilir ekibimiz, çalışma saatlerinizi aksatmayacak şekilde, esnek programlarla hizmet verir. Masalar, sandalyeler, zeminler, camlar, ortak alanlar, mutfak ve tuvaletler gibi ofisinizin her köşesi, en ince ayrıntısına kadar titizlikle temizlenir. Modern ekipmanlarımızla hızlı ve etkili sonuçlar alıyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Ofis ortamları için özel olarak seçtiğimiz, insan sağlığına zararsız, anti-alerjik ve anti-bakteriyel temizlik ürünleri kullanıyoruz. Yüzey temizleyicilerimiz, mobilyalarınıza zarar vermeden parlaklık sağlar. Cam temizleyicilerimiz iz bırakmaz. Tuvalet ve mutfak gibi hijyenin kritik olduğu alanlarda ise Sağlık Bakanlığı onaylı, güçlü dezenfektanlar kullanarak tam hijyen sağlıyoruz.</p>`
+            },
+            house: {
+                cardTitle: 'Ev & Villa Temizliği',
+                shortDesc: 'Yaşam alanlarınızı derinlemesine temizleyerek size sağlıklı ve huzurlu bir ortam sunuyoruz.',
+                cardImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop',
+                alt: 'Ev Temizliği',
+                title: 'Detaylı Ev ve Villa Temizliği',
+                heroImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">Yoğun hayat temposunda ev temizliğine vakit ayırmak zor olabilir. Yekpare Temizlik olarak, ev ve villalarınız için detaylı ve hijyenik temizlik hizmeti sunarak, size ve sevdiklerinize sağlıklı, ferah ve konforlu bir yaşam alanı yaratıyoruz. İster tek seferlik, ister periyodik temizlik ihtiyaçlarınız için yanınızdayız.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Güvenilir ve titiz ekibimiz, evinizin her köşesini kendi evi gibi benimseyerek temizler. Odalar, mutfak, banyo, balkonlar, camlar ve tüm yüzeyler en ince ayrıntısına kadar temizlenir. Eşyalarınıza özen gösterir, her bir yüzey için doğru temizlik tekniğini uygularız.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Ailenizin sağlığı bizim için her şeyden önemli. Bu nedenle, ev temizliğinde kullandığımız tüm ürünler, zararlı kimyasallar içermeyen, bitkisel bazlı, hipoalerjenik ve çevre dostu formüllerden oluşur. Özellikle çocuklu ve evcil hayvanlı evler için özel olarak seçtiğimiz, kalıntı bırakmayan ve güvenle solunabilen ürünler tercih ediyoruz. Ahşap, mermer, granit gibi hassas yüzeyler için özel koruyucu ve parlatıcı bakım ürünleri kullanıyoruz.</p>`
+            },
+            restaurant: {
+                cardTitle: 'Restoran & Cafe Temizliği',
+                shortDesc: 'Müşterilerinize hijyenik bir ortam sunmanız için mutfak ve salon temizliğini titizlikle yapıyoruz.',
+                cardImage: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?q=80&w=1374&auto=format&fit=crop',
+                alt: 'Restoran Temizliği',
+                title: 'Restoran ve Cafe Hijyen Çözümleri',
+                heroImage: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?q=80&w=1920&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1578496479532-3202d08f0a6d?q=80&w=600&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">Gıda işletmelerinde hijyen, müşteri memnuniyeti ve işletme ruhsatı için en kritik unsurdur. Yekpare Temizlik olarak, restoran, cafe ve barlarınız için özel hijyen çözümleri sunuyoruz. Mutfak, zeminler, masalar, tuvaletler ve tüm genel alanları, gıda güvenliği standartlarına uygun olarak temizliyor ve dezenfekte ediyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Gıda işletmeleri temizliği konusunda tecrübeli ekibimiz, hijyen kurallarını ve çapraz bulaşma risklerini bilerek çalışır. İşletmenizin açık olmadığı saatlerde, esnek programlarla hizmet vererek operasyonlarınızı aksatmayız. Müşterilerinizin ve denetçilerin karşısına her zaman temiz ve güvenilir bir işletme olarak çıkmanızı sağlarız.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Restoran temizliğinde, gıda ile temasa uygun, Sağlık Bakanlığı onaylı, kokusuz ve güçlü dezenfektanlar kullanıyoruz. Mutfaklardaki inatçı yağ ve kirler için özel olarak geliştirilmiş, gıda güvenliğine uygun alkali yağ çözücüler tercih ediyoruz. Zeminler için kaydırmazlık sağlayan, bakteri oluşumunu engelleyen özel temizleyiciler ve yüzeyler için gıda artıklarını ve mikropları yok eden güçlü dezenfektanlarla çalışıyoruz.</p>`
+            },
+            hotel: {
+                cardTitle: 'Otel & Yurt Temizliği',
+                shortDesc: 'Konaklama alanlarının ortak kullanım bölgelerini ve odalarını misafirleriniz için hijyenik tutuyoruz.',
+                cardImage: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1470&auto=format&fit=crop',
+                alt: 'Otel Temizliği',
+                title: 'Otel ve Yurt Ortak Alan Temizliği',
+                heroImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbb563?q=80&w=1920&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1571896349842-33c89424de2d?q=80&w=600&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">Otel ve yurt gibi konaklama tesislerinde ortak alanların temizliği, misafir ve öğrencilerin sağlığı ve konforu için hayati önem taşır. Lobiler, koridorlar, yemekhaneler, spor salonları, tuvaletler ve diğer tüm ortak kullanım alanlarında yüksek hijyen standartları sağlıyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Yüksek insan sirkülasyonunun olduğu bu alanlarda, profesyonel ekibimiz hızlı, etkili ve fark edilmeden çalışır. Belirlenen periyotlarla düzenli olarak yapılan temizlik ve dezenfeksiyon işlemleri ile hastalıkların yayılma riskini en aza indirir, konuklarınıza güvenli bir ortam sunarız.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Geniş alanlar için endüstriyel tip zemin temizleme makineleri ve bu makineler için özel olarak üretilmiş, parlatıcı ve koruyucu özellikli zemin temizleyicileri kullanıyoruz. Yüksek temas noktaları (kapı kolları, asansör düğmeleri, trabzanlar) için hızlı etki eden, alkol bazlı yüzey dezenfektanları tercih ediyoruz. Genel alanlarda ise hoş kokulu, ferahlık veren ve uzun süre etkili temizlik ürünleri ile çalışıyoruz.</p>`
+            },
+            school: {
+                cardTitle: 'Okul & Kreş Temizliği',
+                shortDesc: 'Çocuklarımızın eğitim gördüğü alanları, sağlıklarını koruyacak şekilde özenle temizliyoruz.',
+                cardImage: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1632&auto=format&fit=crop',
+                alt: 'Okul Temizliği',
+                title: 'Okul, Dershane ve Kreş Hijyeni',
+                heroImage: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?q=80&w=1920&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1594654926715-998ac5a3c3c7?q=80&w=600&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">Çocukların ve gençlerin eğitim gördüğü okullar, dershaneler ve kreşler, hijyenin en önemli olduğu yerlerin başında gelir. Onların sağlığını korumak ve bulaşıcı hastalıkların yayılmasını önlemek bizim önceliğimizdir. Sınıflar, koridorlar, oyun alanları, yemekhaneler ve tuvaletler gibi tüm alanları özenle temizliyor ve dezenfekte ediyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Eğitim kurumları temizliği konusunda deneyimli ekibimiz, çocukların hassasiyetini göz önünde bulundurarak çalışır. Eğitim saatleri dışında, okulu yeni güne tertemiz ve hijyenik bir şekilde hazırlarız. Oyuncaklar, sıralar, kapı kolları gibi sık temas edilen yüzeylerin dezenfeksiyonuna özel önem veriyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Çocukların sağlığına uygun, toksik madde içermeyen, anti-alerjik ve dermatolojik olarak test edilmiş, doğal içerikli temizlik ürünleri kullanıyoruz. Özellikle kreş ve anaokulları için, zararlı kimyasal buharı salmayan, bitkisel özlü ve gıda sınıfı dezenfektanlar tercih ediyoruz. Tüm ürünlerimiz, çocukların bulunduğu ortamlar için özel olarak seçilmiş, en güvenli ve en etkili formüllerden oluşmaktadır.</p>`
+            },
+            industrial: {
+                cardTitle: 'Endüstriyel Mutfak Temizliği',
+                shortDesc: 'Yanmış yağ ve zorlu kirlerin biriktiği endüstriyel mutfakları detaylıca temizliyoruz.',
+                cardImage: 'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=1528&auto=format&fit=crop',
+                alt: 'Endüstriyel Mutfak Temizliği',
+                title: 'Endüstriyel Mutfak ve Depo Temizliği',
+                heroImage: 'https://images.unsplash.com/photo-1604332738234-8021a8a2a0d9?q=80&w=1920&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1616428825227-a720dec8084a?q=80&w=600&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">Endüstriyel mutfaklar, yüksek ısı ve yoğun kullanım nedeniyle yanmış yağ, yemek artıkları ve inatçı kirlerin en çok biriktiği alanlardır. Bu alanların düzenli ve profesyonelce temizlenmesi, hem gıda güvenliği hem de yangın önleme açısından zorunludur. Davlumbazlar, fırınlar, ocaklar, zeminler ve tüm paslanmaz çelik yüzeyleri, ilk günkü temizliğine kavuşturuyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Ekibimiz, endüstriyel mutfak temizliğinin gerektirdiği özel bilgi ve donanıma sahiptir. Güçlü yağ sökücüler ve özel aparatlar kullanarak, ulaşılması en zor yerlerdeki kirleri bile etkili bir şekilde temizleriz. Depo alanlarınızı da düzenliyor, tozdan ve kirden arındırarak hijyenik bir saklama ortamı sağlıyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Yanmış ve kurumuş yağlar için, fırın ve davlumbazlarda kullanılan, yüksek alkali, köpüklü karbon çözücüler; paslanmaz çelik yüzeyler için, metale zarar vermeyen, parlatan ve koruyan özel ürünler kullanıyoruz. Zeminlerdeki kayganlığı önleyen, gıda güvenliğine uygun, güçlü yağ sökücüler ve dezenfektanlarla çalışıyoruz. Tüm ürünlerimiz endüstriyel kullanım standartlarına uygun olup, işletmenizin hijyen denetimlerinden sorunsuzca geçmesini sağlar.</p>`
+            },
+            floor: {
+                cardTitle: 'Koltuk Yıkama',
+                shortDesc: 'Koltuklarınızı ilk günkü temizliğine kavuşturan profesyonel yıkama hizmeti.',
+                cardImage: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop',
+                alt: 'Koltuk Yıkama',
+                title: 'Profesyonel Koltuk Yıkama Hizmeti',
+                heroImage: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop',
+                detailImage: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop',
+                description: `
+                    <p class="mb-4 text-lg text-gray-600">Günlük hayatta en çok kullandığımız eşyalardan olan koltuklar, zamanla kirlenir, lekelenir ve bakteri yuvası haline gelebilir. Yekpare Temizlik olarak, profesyonel koltuk yıkama hizmetimizle koltuklarınızı derinlemesine temizleyerek ilk günkü görünümüne ve hijyenine kavuşturuyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Güvenilir Sistem ve Deneyimli Ekip</h4>
+                    <p class="mb-4 text-gray-600">Her koltuk kumaşının yapısı farklıdır ve özel bir temizlik tekniği gerektirir. Deneyimli ekibimiz, kumaş türüne en uygun temizlik ürününü ve yöntemi belirleyerek eşyalarınıza zarar vermeden, en etkili sonucu alır. Kumaş dokusunu canlandıran, renkleri parlatan ve hızlı kuruma sağlayan son teknoloji makineler kullanıyoruz.</p>
+                    <h4 class="font-bold text-2xl mt-8 mb-4 text-primary-blue">Kullandığımız Malzemeler</h4>
+                    <p class="mb-4 text-gray-600">Koltuklarınız için, kumaşın dokusuna ve rengine zarar vermeyen, insan sağlığına duyarlı, anti-alerjik ve anti-bakteriyel döşeme şampuanları kullanıyoruz. Zorlu lekeler için kumaş türüne özel, etkili leke sökücüler uyguluyoruz. Yıkama sonrası yapılan durulama işlemiyle koltuğunuzda hiçbir kimyasal kalıntı bırakmıyor, size ve ailenize tamamen güvenli, temiz ve ferah bir ortam sunuyoruz.</p>`
+            }
+        };
+
+        const projectsData = [
+            { id: 'office', image: 'https://images.unsplash.com/photo-1603796846097-bee99e4a601f?q=80&w=800&auto=format&fit=crop', title: 'Ofis Temizliği' },
+            { id: 'house', image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop', title: 'Ev & Villa Temizliği' },
+            { id: 'construction', image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1470&auto=format&fit=crop', title: 'İnşaat Sonrası Temizlik' },
+            { id: 'floor', image: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=800&auto=format&fit=crop', title: 'Koltuk Yıkama' }
+        ];
+
+        const slidesData = [
+            { 
+                image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop',
+                alt: 'Lüks Villa Temizliği',
+                title: 'EV & VİLLA TEMİZLİĞİ',
+                subtitle: 'Yaşam Alanlarınıza Profesyonel Dokunuş',
+                buttonText: 'Detayları İncele',
+                serviceId: 'house'
+            },
+            { 
+                image: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1920&auto=format&fit=crop',
+                alt: 'Modern Ofis Temizliği',
+                title: 'OFİS & PLAZA TEMİZLİĞİ',
+                subtitle: 'Verimli ve Hijyenik Çalışma Ortamları',
+                buttonText: 'Hizmetlerimiz',
+                serviceId: 'office'
+            },
+            { 
+                image: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1470&auto=format&fit=crop',
+                alt: 'İnşaat Sonrası Temizlik',
+                title: 'İNŞAAT SONRASI TEMİZLİK',
+                subtitle: 'Yeni Başlangıçlar İçin Pırıl Pırıl Mekanlar',
+                buttonText: 'Teklif Al',
+                serviceId: 'construction'
+            }
+        ];
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const header = document.getElementById('header');
+            const sliderContainer = document.getElementById('slider-container');
+            const sliderDots = document.getElementById('slider-dots');
+            
+            let currentSlide = 0;
+            let slideInterval;
+
+            // Mobile menu toggle
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Close mobile menu on link click
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+
+            // Header shrink on scroll
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('py-2');
+                    header.classList.remove('py-3');
+                } else {
+                    header.classList.remove('py-2');
+                    header.classList.add('py-3');
+                }
+            });
+
+            // Hero Slider Logic
+            function createSlides() {
+                slidesData.forEach((slide, index) => {
+                    const slideElement = document.createElement('div');
+                    slideElement.className = 'absolute w-full h-full transition-opacity duration-1000 ease-in-out';
+                    slideElement.style.opacity = index === 0 ? '1' : '0';
+                    // Tarayıcı rendering hatalarını düzeltmek için eklendi
+                    slideElement.style.backfaceVisibility = 'hidden';
+                    slideElement.style.transform = 'translateZ(0)';
+
+                    slideElement.innerHTML = `
+                        <img src="${slide.image}" alt="${slide.alt}" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/50"></div>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center px-4">
+                            <div class="slide-content">
+                                <h1 class="text-4xl md:text-6xl font-bold mb-4 hero-text-animate">${slide.title}</h1>
+                                <p class="text-lg md:text-2xl mb-8 hero-subtext-animate">${slide.subtitle}</p>
+                                <button data-serviceid="${slide.serviceId}" class="service-page-trigger bg-orange-500 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-orange-600 transition duration-300 shadow-xl hero-button-animate">${slide.buttonText}</button>
+                            </div>
+                        </div>
+                    `;
+                    sliderContainer.appendChild(slideElement);
+                    
+                    const dot = document.createElement('button');
+                    dot.className = 'w-3 h-3 rounded-full transition-colors duration-300';
+                    dot.style.backgroundColor = index === 0 ? theme.colors['accent-orange'] : 'rgba(255,255,255,0.5)';
+                    dot.addEventListener('click', () => {
+                        goToSlide(index);
+                        resetInterval();
+                    });
+                    sliderDots.appendChild(dot);
+                });
+                
+                // Add event listener for service page triggers after creating slides
+                document.querySelectorAll('.service-page-trigger').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const serviceId = this.getAttribute('data-serviceid');
+                        if(serviceId !== 'iletisim') {
+                            showPage(serviceId);
+                        } else {
+                            document.getElementById('iletisim').scrollIntoView();
+                        }
+                    });
+                });
+            }
+            
+            function animateSlideContent(slideIndex) {
+                const slides = sliderContainer.children;
+                const slide = slides[slideIndex];
+                const content = slide.querySelector('.slide-content');
+                if (content) {
+                    // Remove animation classes to reset
+                    content.querySelector('h1').classList.remove('hero-text-animate');
+                    content.querySelector('p').classList.remove('hero-subtext-animate', 'opacity-0');
+                    content.querySelector('button').classList.remove('hero-button-animate', 'opacity-0');
+                    
+                    // Force reflow to restart animation
+                    void content.offsetWidth;
+                    
+                    // Add animation classes
+                    content.querySelector('h1').classList.add('hero-text-animate');
+                    content.querySelector('p').classList.add('hero-subtext-animate', 'opacity-0');
+                    content.querySelector('button').classList.add('hero-button-animate', 'opacity-0');
+                }
+            }
+
+            function goToSlide(slideIndex) {
+                const slides = sliderContainer.children;
+                const dots = sliderDots.children;
+                
+                slides[currentSlide].style.opacity = '0';
+                dots[currentSlide].style.backgroundColor = 'rgba(255,255,255,0.5)';
+                
+                currentSlide = slideIndex;
+                
+                slides[currentSlide].style.opacity = '1';
+                dots[currentSlide].style.backgroundColor = theme.colors['accent-orange'];
+                
+                animateSlideContent(currentSlide);
+            }
+
+            function nextSlide() {
+                const slides = sliderContainer.children;
+                let next = (currentSlide + 1) % slides.length;
+                goToSlide(next);
+            }
+            
+            function resetInterval() {
+                clearInterval(slideInterval);
+                slideInterval = setInterval(nextSlide, 5000);
+            }
+
+            // Service Cards Injection
+            const servicesContainer = document.querySelector('#hizmetlerimiz .grid');
+            Object.keys(servicesData).forEach(key => {
+                const service = servicesData[key];
+                const card = document.createElement('div');
+                card.className = 'service-card-hover group relative rounded-lg overflow-hidden shadow-2xl cursor-pointer';
+                card.setAttribute('data-service', key);
+                card.innerHTML = `
+                    <div class="absolute inset-0">
+                        <img src="${service.cardImage}" alt="${service.alt}" class="w-full h-full object-cover service-card-bg">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    </div>
+                    <div class="relative p-6 flex flex-col justify-end h-96 text-white">
+                        <h3 class="text-3xl font-bold mb-4">${service.cardTitle}</h3>
+                        <div class="service-card-content bg-black/50 p-4 rounded-md absolute bottom-0 left-0 right-0">
+                            <p class="mb-4">${service.shortDesc}</p>
+                            <span class="font-semibold text-orange-400">Detayları Gör →</span>
+                        </div>
+                    </div>
+                `;
+                servicesContainer.appendChild(card);
+            });
+
+            // KULLANICININ SEÇTİĞİ PROJELER GALERİSİ BÖLÜMÜ BU KOD BLOKU TARAFINDAN OLUŞTURULMAKTADIR
+            // Project Gallery Injection
+            const projectsContainer = document.querySelector('#projelerimiz .grid');
+            projectsData.forEach(project => {
+                const item = document.createElement('div');
+                item.className = 'relative group overflow-hidden cursor-pointer';
+                item.setAttribute('data-project-id', project.id);
+                item.innerHTML = `
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/40 group-hover:bg-black/70 transition-colors duration-300 flex items-center justify-center">
+                        <div class="text-center text-white p-4">
+                            <h4 class="text-2xl font-bold transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300">${project.title}</h4>
+                        </div>
+                    </div>
+                `;
+                projectsContainer.appendChild(item);
+            });
+            
+            // Modal Logic
+            const modal = document.getElementById('modal');
+            const modalBackdrop = document.getElementById('modal-backdrop');
+            const modalContent = document.getElementById('modal-content');
+
+            function showModal(projectId) {
+                const serviceData = servicesData[projectId];
+                if (!serviceData) return;
+                
+                modalContent.innerHTML = `
+                    <button id="close-modal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 z-10">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                    <div class="grid grid-cols-1 md:grid-cols-2">
+                        <div class="h-64 md:h-full">
+                            <img src="${serviceData.detailImage}" alt="${serviceData.alt}" class="w-full h-full object-cover rounded-l-lg">
+                        </div>
+                        <div class="p-8">
+                            <h3 class="text-3xl font-bold text-primary-blue mb-4">${serviceData.title}</h3>
+                            <div class="prose max-w-none">
+                                ${serviceData.description.substring(0, 400)}...
+                            </div>
+                            <button data-serviceid="${projectId}" class="service-page-trigger mt-6 bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 transition duration-300">Daha Fazla Bilgi</button>
+                        </div>
+                    </div>
+                `;
+                
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                modalBackdrop.classList.add('modal-backdrop-enter');
+                modalContent.classList.add('modal-enter');
+                
+                document.getElementById('close-modal').addEventListener('click', hideModal);
+                
+                modalContent.querySelector('.service-page-trigger').addEventListener('click', function(){
+                    hideModal();
+                    // Delay showing page to allow modal to close
+                    setTimeout(() => showPage(this.getAttribute('data-serviceid')), 300);
+                });
+            }
+
+            function hideModal() {
+                modalBackdrop.classList.add('modal-backdrop-leave');
+                modalContent.classList.add('modal-leave');
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    modal.classList.remove('flex');
+                    modalBackdrop.classList.remove('modal-backdrop-enter', 'modal-backdrop-leave');
+                    modalContent.classList.remove('modal-enter', 'modal-leave');
+                }, 300);
+            }
+
+            modalBackdrop.addEventListener('click', hideModal);
+            
+            projectsContainer.querySelectorAll('.group').forEach(item => {
+                item.addEventListener('click', () => {
+                    showModal(item.getAttribute('data-project-id'));
+                });
+            });
+
+            // Service Detail Page Logic
+            const pageContainer = document.getElementById('page-container');
+            const mainContent = document.getElementById('main-content');
+            
+            function createPages(){
+                 Object.keys(servicesData).forEach(key => {
+                    const service = servicesData[key];
+                    const pageElement = document.createElement('div');
+                    pageElement.id = `page-${key}`;
+                    pageElement.className = 'page';
+                    pageElement.innerHTML = `
+                         <div class="relative">
+                            <button class="close-page-btn absolute top-5 right-5 z-20 bg-white/50 p-2 rounded-full text-gray-800 hover:bg-white transition">
+                               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                            <!-- Hero for service page -->
+                            <section class="relative h-[50vh] bg-cover bg-center" style="background-image: url('${service.heroImage}')">
+                                <div class="absolute inset-0 bg-black/60"></div>
+                                <div class="relative h-full flex items-center justify-center text-center text-white px-4">
+                                    <div class="fade-in">
+                                        <h1 class="text-5xl md:text-7xl font-bold">${service.title}</h1>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <!-- Content for service page -->
+                             <section class="py-20">
+                                <div class="container mx-auto px-6">
+                                    <div class="flex flex-wrap -mx-4 items-center">
+                                        <div class="w-full lg:w-5/12 px-4 mb-8 lg:mb-0">
+                                            <img src="${service.detailImage}" alt="${service.alt}" class="rounded-lg shadow-2xl w-full">
+                                        </div>
+                                        <div class="w-full lg:w-7/12 px-4">
+                                            <div class="prose max-w-none text-lg">
+                                                ${service.description}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                            <section class="bg-gray-100 py-16">
+                                <div class="container mx-auto px-6 text-center">
+                                     <h2 class="text-3xl font-bold text-primary-blue mb-8">Bu Hizmetle İlgili Teklif Alın</h2>
+                                     <a href="#iletisim" class="inline-block bg-orange-500 text-white px-10 py-4 rounded-full text-xl font-semibold hover:bg-orange-600 transition duration-300 close-page-btn">Hemen Bize Ulaşın</a>
+                                </div>
+                            </section>
+                        </div>
+                    `;
+                    pageContainer.appendChild(pageElement);
+                });
+            }
+            
+            function showPage(serviceId){
+                const page = document.getElementById(`page-${serviceId}`);
+                if(page){
+                    document.body.style.overflow = 'hidden';
+                    mainContent.style.display = 'none';
+                    page.classList.add('active');
+                    page.scrollTop = 0; // Scroll to top on open
+                }
+            }
+            
+            function hideAllPages(){
+                document.querySelectorAll('.page').forEach(p => {
+                    p.classList.remove('active');
+                });
+                document.body.style.overflow = 'auto';
+                mainContent.style.display = 'block';
+            }
+
+            // Event delegation for service page triggers
+            document.body.addEventListener('click', function(e) {
+                // For service cards
+                const card = e.target.closest('.service-card-hover');
+                if (card) {
+                    const serviceId = card.getAttribute('data-service');
+                    showPage(serviceId);
+                    return;
+                }
+                
+                // For closing pages
+                const closeBtn = e.target.closest('.close-page-btn');
+                if (closeBtn) {
+                     e.preventDefault();
+                     hideAllPages();
+                     // If it's a link to contact form, scroll after closing
+                     if (closeBtn.getAttribute('href') === '#iletisim') {
+                         setTimeout(() => {
+                           document.getElementById('iletisim').scrollIntoView({behavior: 'smooth'});
+                         }, 500); // Wait for page transition
+                     }
+                }
+            });
+            
+            // WhatsApp form handler
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value; // Keep email optional
+                const phone = document.getElementById('contact-phone').value; // Keep phone optional
+                const serviceSelect = document.getElementById('contact-service');
+                const service = serviceSelect.options[serviceSelect.selectedIndex].text === 'Hizmet Seçiniz' ? '' : serviceSelect.value;
+                const message = document.getElementById('contact-message').value;
+
+                const whatsappNumber = "905531535049"; // Your WhatsApp number with country code, no '+' or spaces
+                
+                let whatsappMessage = `Merhaba Yekpare Temizlik,\n\n`;
+                whatsappMessage += `Temizlik hizmeti için teklif almak istiyorum:\n\n`;
+                whatsappMessage += `*Ad Soyad:* ${name}\n`;
+                if (email) whatsappMessage += `*E-posta:* ${email}\n`; // Include if provided
+                if (phone) whatsappMessage += `*Telefon:* ${phone}\n`; // Include if provided
+                if (service) whatsappMessage += `*Talep Edilen Hizmet:* ${service}\n`;
+                whatsappMessage += `*Mesaj:* ${message}`;
+
+                const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+
+                // Open WhatsApp link in a new tab
+                window.open(whatsappUrl, '_blank');
+            });
+
+
+            // Initial Setup
+            createSlides();
+            createPages();
+            slideInterval = setInterval(nextSlide, 5000);
+            animateSlideContent(0);
+
+            // --- About Us slider setup ---
+            const aboutTeamImages = [
+                { src: 'resimler/Ekran görüntüsü 2025-10-21 185244.png', alt: 'Ekip Görsel 1' },
+                { src: 'resimler/Gemini_Generated_Image_eg9ejaeg9ejaeg9e.png', alt: 'Ekip Görsel 2' },
+                { src: 'resimler/unnamed (2).jpg', alt: 'Ekip Görsel 3' }
+            ];
+
+            (function setupAboutSlider(){
+                const slider = document.getElementById('about-slider');
+                const dotsContainer = document.getElementById('about-slider-dots');
+                if(!slider) return;
+
+                const PLACEHOLDER = 'https://placehold.co/800x600/efefef/7f7f7f?text=G%C3%B6rsel+y%C3%BCklenemedi';
+
+                let idx = 0;
+                const slides = [];
+
+                aboutTeamImages.forEach((imgObj, i) => {
+                    const s = document.createElement('div');
+                    s.className = 'absolute inset-0 transition-opacity duration-700';
+                    s.style.opacity = i === 0 ? '1' : '0';
+                    s.innerHTML = `<div class="about-slide w-full h-full"><img src="${imgObj.src}" alt="${imgObj.alt}" class="max-w-full max-h-full object-contain" onerror="this.onerror=null;this.src='${PLACEHOLDER}';"></div>`;
+                    slider.appendChild(s);
+                    slides.push(s);
+
+                    const dot = document.createElement('button');
+                    dot.className = 'w-2 h-2 rounded-full bg-white/60';
+                    if(i === 0) dot.classList.add('bg-white');
+                    dot.addEventListener('click', () => {
+                        slides[idx].style.opacity = '0';
+                        dotsContainer.children[idx].classList.remove('bg-white');
+                        idx = i;
+                        slides[idx].style.opacity = '1';
+                        dotsContainer.children[idx].classList.add('bg-white');
+                        resetAboutInterval();
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+
+                let aboutInterval = setInterval(() => {
+                    slides[idx].style.opacity = '0';
+                    dotsContainer.children[idx].classList.remove('bg-white');
+                    idx = (idx + 1) % slides.length;
+                    slides[idx].style.opacity = '1';
+                    dotsContainer.children[idx].classList.add('bg-white');
+                }, 4000);
+
+                function resetAboutInterval(){
+                    clearInterval(aboutInterval);
+                    aboutInterval = setInterval(() => {
+                        slides[idx].style.opacity = '0';
+                        dotsContainer.children[idx].classList.remove('bg-white');
+                        idx = (idx + 1) % slides.length;
+                        slides[idx].style.opacity = '1';
+                        dotsContainer.children[idx].classList.add('bg-white');
+                    }, 4000);
+                }
+            })();
+
+        });
+    </script>
+</body>
+</html>
+
